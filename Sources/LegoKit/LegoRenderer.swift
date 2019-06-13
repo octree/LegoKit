@@ -25,7 +25,6 @@ func id<T>(_ t: T) -> T {
     return t
 }
 
-@available(iOS 11.0, *)
 public final class LegoRenderer: NSObject {
     public private(set) lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
@@ -43,12 +42,21 @@ public final class LegoRenderer: NSObject {
     
     public func render(in view: UIView, config: (UICollectionView) -> Void = { _ in }) {
         view.addSubview(collectionView)
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-            ])
+        if #available(iOS 11.0, *) {
+            NSLayoutConstraint.activate([
+                collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+                collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+                collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+                ])
+        } else {
+            NSLayoutConstraint.activate([
+                collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+                collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+                ])
+        }
         layout.sectionLayouts = lego.sections.map { $0.layout }
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -78,7 +86,6 @@ public final class LegoRenderer: NSObject {
     }
 }
 
-@available(iOS 11.0, *)
 extension LegoRenderer: CompositionLayoutDelegate {
     
     public func collectionView(_ collectionView: UICollectionView, sizeThatFits size: CGSize, at indexPath: IndexPath) -> CGSize {
@@ -86,7 +93,6 @@ extension LegoRenderer: CompositionLayoutDelegate {
     }
 }
 
-@available(iOS 11.0, *)
 extension LegoRenderer: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print("numberOfItemsInSection", lego.sections[section].items.count)

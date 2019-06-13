@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 public protocol CellType {
 }
 

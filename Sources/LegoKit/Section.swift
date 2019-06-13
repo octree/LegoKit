@@ -17,8 +17,11 @@ public protocol SectionsBuilderComponents {
     public static func buildBlock(_ sections: SectionsBuilderComponents...) -> SectionsBuilderComponents {
         return sections.flatMap { $0.asSections }
     }
+    
+    public static func buildIf(_ sections: SectionsBuilderComponents?...) -> SectionsBuilderComponents {
+        return sections.flatMap { $0?.asSections ?? [] }
+    }
 }
-
 
 public protocol SectionType: SectionsBuilderComponents {
     var items: [Item] { get set }

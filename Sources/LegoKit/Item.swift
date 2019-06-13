@@ -15,6 +15,10 @@ public protocol ItemsBuilderComponents {
     public static func buildBlock(_ items: ItemsBuilderComponents...) -> ItemsBuilderComponents {
         return items.flatMap { $0.asItems }
     }
+    
+    public static func buildIf(_ items: ItemsBuilderComponents?...) -> ItemsBuilderComponents {
+        return items.flatMap { $0?.asItems ?? [] }
+    }
 }
 
 public protocol ItemType: ItemsBuilderComponents {

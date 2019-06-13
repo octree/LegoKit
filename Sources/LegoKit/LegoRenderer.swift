@@ -7,14 +7,6 @@
 
 import UIKit
 
-public protocol SectionsMiddleware {
-    func process(sections: [Section], onNext: ([Section]) -> [Section]) -> [Section]
-}
-
-public protocol ItemsMiddleware {
-    func process(items: [Item], onNext: ([Item]) -> [Item]) -> [Item]
-}
-
 extension Lego {
     subscript(indexPath: IndexPath) -> Item {
         return sections[indexPath.section].items[indexPath.item]
@@ -33,8 +25,6 @@ public final class LegoRenderer: NSObject {
     }()
     private let layout = CompositionLayout()
     public private(set) var lego: Lego
-    private var itemProccessor: ([Item]) -> [Item] = id
-    private var sectionProccessor: ([Section]) -> [Section] = id
     public init(lego: Lego) {
         self.lego = lego
         super.init()
@@ -70,20 +60,6 @@ public final class LegoRenderer: NSObject {
     public func reload() {
         collectionView.reloadData()
     }
-    
-    public func useItemsMiddleware(_ middleware: ItemsMiddleware) {
-        let f = itemProccessor
-        itemProccessor = {
-            middleware.process(items: $0, onNext: f)
-        }
-    }
-    
-    public func useSectionsMiddleware(_ middleware: SectionsMiddleware) {
-        let f = sectionProccessor
-        sectionProccessor = {
-            middleware.process(sections: $0, onNext: f)
-        }
-    }
 }
 
 extension LegoRenderer: CompositionLayoutDelegate {
@@ -95,12 +71,10 @@ extension LegoRenderer: CompositionLayoutDelegate {
 
 extension LegoRenderer: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("numberOfItemsInSection", lego.sections[section].items.count)
         return lego.sections[section].items.count
     }
     
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        print("numberOfSections", lego.sections.count)
         return lego.sections.count
     }
     

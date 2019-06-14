@@ -57,7 +57,6 @@ open class TypedItem<V, C: BaseTypedCell<V>>: Item, TypedItemType {
     }
     
     static func register(in collectionView: UICollectionView) {
-        print(CellType.classForCoder(), identifier)
         collectionView.register(CellType.classForCoder(), forCellWithReuseIdentifier: identifier)
     }
     

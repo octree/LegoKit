@@ -61,7 +61,9 @@ open class TypedItem<V, C: BaseTypedCell<V>>: Item, TypedItemType {
     }
     
     override open func createCell(in collectionView: UICollectionView, at indexPath: IndexPath) -> BaseCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Self.identifier, for: indexPath) as! CellType
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Self.identifier, for: indexPath) as? CellType else {
+            fatalError("Cannot create a new cell with identifier: \(Self.identifier), Expected cell type: \(CellType.self)")
+        }
         cell.renderer(with: value)
         return cell
     }

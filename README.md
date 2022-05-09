@@ -127,3 +127,5 @@ class ViewController: UIViewController, LegoContainer {
 * 当用于配置 Lego 的数据，使用了 `@State` 或者 `@StateObject ` 时就不需要手动调用 `apply` 函数。当数据发生变动时，会自动更新 `UICollectionView`。
 
 ## License
+
+**LegoKit** is available under the MIT license. See the LICENSE file for more info.

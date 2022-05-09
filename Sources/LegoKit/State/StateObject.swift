@@ -25,6 +25,7 @@
 //  THE SOFTWARE.
 
 import Foundation
+import Combine
 
 /// This property wrapper will apply ``Lego`` to ``LegoRenderer`` automatically while the ``Published`` value wa changed.
 /// The instance that hold this property must confirm to ``LegoContainer`` protocol.
@@ -40,7 +41,7 @@ public struct StateObject<Value: LegoObservableObject> {
 
     private class Box {
         weak var container: LegoContainer?
-        var cancellation: Cancellation?
+        var cancellable: AnyCancellable?
     }
 
     private var storage: Value
@@ -55,7 +56,7 @@ public struct StateObject<Value: LegoObservableObject> {
     private func bind(to instance: LegoContainer) {
         guard box.container !== instance else { return }
         box.container = instance
-        box.cancellation = storage.objectDidChange.observe {
+        box.cancellable = storage.objectDidChange.sink {
             guard let container = box.container else {
                 return
             }

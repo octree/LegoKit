@@ -1,0 +1,10 @@
+@Tutorials(name: "使用 LegoKit 配置 UICollectionView") {
+    @Intro(title: "使用声明式语法配置 UICollectionView") {
+        text
+    }
+    
+    @Chapter(name: "创建工程") {
+        创建一个 iOS App 工程，添加 ``LegoKit`` 依赖
+        @TutorialReference(tutorial: "doc:Chapter-1")
+    }
+}

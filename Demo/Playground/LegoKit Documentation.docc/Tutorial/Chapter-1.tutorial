@@ -1,0 +1,23 @@
+@Tutorial(time: 10) {
+    @Intro(title: "创建工程") {
+        创建一个 iOS App 工程，添加 ``LegoKit`` 依赖
+    }
+    
+    @Section(title: "Hello") {
+        @ContentAndMedia {
+            text
+            
+            @Image(source: file, alt: "accessible description")
+        }
+        
+        @Steps {
+            @Step {
+                text
+            }
+            
+            @Step {
+<!--                @Code(name: "display name", file: filename.swift)-->
+            }
+        }
+    }
+}

@@ -33,7 +33,7 @@ public protocol LegoDataSource {
     func apply(lego: Lego, animatingDifferences: Bool)
 }
 
-@available(iOS 13.0, *)
+
 public final class LegoDiffableDataSource: LegoDataSource {
     private var dataSource: UICollectionViewDiffableDataSource<AnyHashable, AnyHashable>
     public required init(collectionView: UICollectionView, cellProvider: @escaping CellProvider) {
@@ -47,34 +47,5 @@ public final class LegoDiffableDataSource: LegoDataSource {
             snapshot.appendItems($0.items.map { $0.anyID }, toSection: $0.id)
         }
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
-    }
-}
-
-public final class LegoLegacyDataSource: NSObject, LegoDataSource {
-    private var lego: Lego = Lego {}
-    private weak var collectionView: UICollectionView?
-    public required init(collectionView: UICollectionView, cellProvider: @escaping CellProvider) {
-        self.collectionView = collectionView
-        super.init()
-        collectionView.dataSource = self
-    }
-
-    public func apply(lego: Lego, animatingDifferences: Bool) {
-        self.lego = lego
-        collectionView?.reloadData()
-    }
-}
-
-extension LegoLegacyDataSource: UICollectionViewDataSource {
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return lego.sections[section].items.count
-    }
-
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return lego.sections.count
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return lego[indexPath].createCell(in: collectionView, at: indexPath)
     }
 }

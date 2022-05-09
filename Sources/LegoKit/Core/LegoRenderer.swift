@@ -36,14 +36,8 @@ public final class LegoRenderer: NSObject {
     private lazy var layout = CompositionLayout(delegate: self)
     private lazy var dataSource: LegoDataSource = {
         let dataSource: LegoDataSource
-        if #available(iOS 13, *) {
-            dataSource = LegoDiffableDataSource(collectionView: collectionView) { [weak self] in
-                self?.cellProvider(collectionView: $0, indexPath: $1, itemID: $2)
-            }
-        } else {
-            dataSource = LegoLegacyDataSource(collectionView: collectionView) { [weak self] in
-                self?.cellProvider(collectionView: $0, indexPath: $1, itemID: $2)
-            }
+        dataSource = LegoDiffableDataSource(collectionView: collectionView) { [weak self] in
+            self?.cellProvider(collectionView: $0, indexPath: $1, itemID: $2)
         }
         return dataSource
     }()

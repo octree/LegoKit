@@ -3,27 +3,13 @@
 使用声明式语法组织 UICollectionView。支持类似 SwiftUI 的 `@State`、`@Published` 和 `@StateObject`
 
 
-
-## 目标
-
-- [x] 通过声明式语法组织 `UICollectionView` 的 `Section` 和 `Cell`;
-- [x] `@State` 等 wrapper 自动处理数据流，当数据发生变更时，自动更新 UI；
-- [x] Section 可以配置布局，会由一个 CollectionViewLayout 组装这些 Section Layout；
-- [x] 自动管理 Animation；
-  - [x] 目前只有 iOS 13 以上支持动画。
-
 ## Installation
 
 ### Swift Package Manager
 
-```swift
-```
-
-### CocoaPods
-
-```ruby
-pod 'LegoKit', '~> 1.0.0'
-```
+File > Swift Packages > Add Package Dependency
+Add https://github.com/octree/LegoKit.git
+Select "Up to Next Major" with "1.0.0"
 
 
 ## How to Use

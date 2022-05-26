@@ -36,6 +36,7 @@ public struct StateObject<Value: LegoObservableObject> {
                message: "This property wrapper can only be applied to ``LegoContainer``")
     public var wrappedValue: Value {
         get { fatalError() }
+        // swiftlint:disable unused_setter_value
         set { fatalError() }
     }
 

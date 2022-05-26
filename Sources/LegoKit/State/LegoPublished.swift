@@ -48,6 +48,7 @@ public struct LegoPublished<Value> {
                message: "@LegoPublished can only be applied to classes")
     public var wrappedValue: Value {
         get { fatalError() }
+        // swiftlint:disable unused_setter_value
         set { fatalError() }
     }
 

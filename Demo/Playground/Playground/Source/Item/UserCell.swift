@@ -72,14 +72,14 @@ public class UserCell: UICollectionViewCell, TypedCellType {
         contentView.addSubview(nameLabel)
         contentView.addConstraints([
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
-            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8)
         ])
 
         genderLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(genderLabel)
         contentView.addConstraints([
             genderLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
-            genderLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            genderLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
         ])
     }
 }

@@ -13,10 +13,10 @@
 		C202A26B27D99B2100210384 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C202A26A27D99B2100210384 /* Assets.xcassets */; };
 		C202A26E27D99B2100210384 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C202A26C27D99B2100210384 /* LaunchScreen.storyboard */; };
 		C26015E327D99C4000E63536 /* LegoKit in Frameworks */ = {isa = PBXBuildFile; productRef = C26015E227D99C4000E63536 /* LegoKit */; };
-		C26015E727D9AEF700E63536 /* ColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26015E627D9AEF700E63536 /* ColorCell.swift */; };
 		C26015E927DAF8C800E63536 /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26015E827DAF8C800E63536 /* GroupCell.swift */; };
 		C26015EB27DAF8D000E63536 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26015EA27DAF8D000E63536 /* UserCell.swift */; };
 		C26015F127DAFBF500E63536 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26015F027DAFBF500E63536 /* Model.swift */; };
+		C26AE122283F78D200E65D2C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C26AE121283F78D200E65D2C /* SnapKit */; };
 		C290C3C327DB21A6005F0AEC /* LegoKit Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = C290C3C227DB21A6005F0AEC /* LegoKit Documentation.docc */; };
 		C2FEB1F62823B616000FF4E5 /* ToggleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FEB1F52823B616000FF4E5 /* ToggleViewController.swift */; };
 /* End PBXBuildFile section */
@@ -30,7 +30,6 @@
 		C202A26D27D99B2100210384 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C202A26F27D99B2100210384 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C26015E427D99DFF00E63536 /* Playground.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Playground.entitlements; sourceTree = "<group>"; };
-		C26015E627D9AEF700E63536 /* ColorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCell.swift; sourceTree = "<group>"; };
 		C26015E827DAF8C800E63536 /* GroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
 		C26015EA27DAF8D000E63536 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		C26015F027DAFBF500E63536 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
@@ -44,6 +43,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C26015E327D99C4000E63536 /* LegoKit in Frameworks */,
+				C26AE122283F78D200E65D2C /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,7 +89,6 @@
 		C26015E527D9AEDA00E63536 /* Item */ = {
 			isa = PBXGroup;
 			children = (
-				C26015E627D9AEF700E63536 /* ColorCell.swift */,
 				C26015E827DAF8C800E63536 /* GroupCell.swift */,
 				C26015EA27DAF8D000E63536 /* UserCell.swift */,
 			);
@@ -153,6 +152,7 @@
 			name = Playground;
 			packageProductDependencies = (
 				C26015E227D99C4000E63536 /* LegoKit */,
+				C26AE121283F78D200E65D2C /* SnapKit */,
 			);
 			productName = Playground;
 			productReference = C202A25E27D99B2000210384 /* Playground.app */;
@@ -182,6 +182,9 @@
 				Base,
 			);
 			mainGroup = C202A25527D99B2000210384;
+			packageReferences = (
+				C26AE120283F78D200E65D2C /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = C202A25F27D99B2000210384 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -235,7 +238,6 @@
 				C290C3C327DB21A6005F0AEC /* LegoKit Documentation.docc in Sources */,
 				C202A26627D99B2000210384 /* ViewController.swift in Sources */,
 				C26015EB27DAF8D000E63536 /* UserCell.swift in Sources */,
-				C26015E727D9AEF700E63536 /* ColorCell.swift in Sources */,
 				C2FEB1F62823B616000FF4E5 /* ToggleViewController.swift in Sources */,
 				C202A26227D99B2000210384 /* AppDelegate.swift in Sources */,
 			);
@@ -464,10 +466,26 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		C26AE120283F78D200E65D2C /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		C26015E227D99C4000E63536 /* LegoKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LegoKit;
+		};
+		C26AE121283F78D200E65D2C /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C26AE120283F78D200E65D2C /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

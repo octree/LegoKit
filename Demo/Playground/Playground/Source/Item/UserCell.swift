@@ -8,6 +8,7 @@
 
 import LegoKit
 import UIKit
+import SnapKit
 
 // MARK: - Item
 
@@ -37,6 +38,7 @@ public class UserCell: UICollectionViewCell, TypedCellType {
         label.textColor = .lightGray
         return label
     }()
+    private let containerView = UIView()
 
     // MARK: - Life Cyle
 
@@ -59,27 +61,24 @@ public class UserCell: UICollectionViewCell, TypedCellType {
         genderLabel.text = "性别：\(item.gender)"
     }
 
-    public static func layout(constraintsTo size: CGSize, with item: Item) -> CGSize {
-        CGSize(width: size.width, height: 60)
-    }
-
     // MARK: - Private
 
     // MARK: Setup
 
     private func setup() {
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(nameLabel)
-        contentView.addConstraints([
-            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
-            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8)
-        ])
+        nameLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(24)
+            $0.top.equalToSuperview().offset(16)
+            $0.trailing.equalToSuperview().offset(-24)
+        }
 
-        genderLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(genderLabel)
-        contentView.addConstraints([
-            genderLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
-            genderLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
-        ])
+        genderLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(24)
+            $0.top.equalTo(nameLabel.snp.bottom).offset(8)
+            $0.trailing.equalToSuperview().offset(-24)
+            $0.bottom.equalToSuperview().offset(-16)
+        }
     }
 }

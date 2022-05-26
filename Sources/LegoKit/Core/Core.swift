@@ -33,7 +33,6 @@ public protocol CellType {}
 public protocol TypedCellType: CellType {
     associatedtype Item
     func update(with item: Item)
-    static func layout(constraintsTo size: CGSize, with item: Item) -> CGSize
 }
 
 public protocol ItemType {
@@ -44,22 +43,16 @@ public protocol ItemType {
 public struct AnyItem: ItemType {
     public var base: ItemType
     public var anyID: AnyHashable { base.anyID }
-    private var _layout: (CGSize) -> CGSize
     public func createCell(in collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell {
         base.createCell(in: collectionView, at: indexPath)
     }
 
     init<C: TypedItemType>(_ item: C) {
         base = item
-        _layout = { item.layout(constraintsTo: $0) }
     }
 
     func `as`<C: TypedItemType>(_ type: C.Type) -> C? {
         base as? C
-    }
-
-    func layout(constraintsTo size: CGSize) -> CGSize {
-        _layout(size)
     }
 }
 
@@ -71,12 +64,6 @@ public protocol TypedItemType: ItemType {
 
 public extension TypedItemType {
     var asItems: [AnyItem] { [AnyItem(self)] }
-}
-
-extension TypedItemType {
-    func layout(constraintsTo size: CGSize) -> CGSize {
-        CellType.layout(constraintsTo: size, with: self)
-    }
 }
 
 public extension TypedItemType {

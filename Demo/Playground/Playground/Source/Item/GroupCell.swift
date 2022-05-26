@@ -65,7 +65,7 @@ public class GroupCell: UICollectionViewCell, TypedCellType {
         contentView.addSubview(nameLabel)
         contentView.addConstraints([
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
 }

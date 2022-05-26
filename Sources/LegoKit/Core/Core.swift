@@ -65,7 +65,7 @@ public struct AnyItem: ItemType {
 
 public protocol TypedItemType: ItemType {
     associatedtype ID: Hashable
-    associatedtype CellType: UICollectionViewCell & TypedCellType where CellType.Item == Self
+    associatedtype CellType: UICollectionViewCell, TypedCellType where CellType.Item == Self
     var id: ID { get }
 }
 

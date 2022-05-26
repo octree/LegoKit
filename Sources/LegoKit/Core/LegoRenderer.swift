@@ -33,7 +33,13 @@ public final class LegoRenderer: NSObject {
         return view
     }()
 
-    private lazy var layout = CompositionLayout(delegate: self)
+    private lazy var layout: UICollectionViewCompositionalLayout = {
+        let layout = UICollectionViewCompositionalLayout { [unowned self] section, _ in
+            lego.sections[section].layout
+        }
+        return layout
+    }()
+
     private lazy var dataSource: LegoDataSource = {
         let dataSource: LegoDataSource
         dataSource = LegoDiffableDataSource(collectionView: collectionView) { [weak self] in
@@ -72,18 +78,6 @@ public final class LegoRenderer: NSObject {
 
     private func cellProvider(collectionView: UICollectionView, indexPath: IndexPath, itemID: AnyHashable) -> UICollectionViewCell? {
         lego[indexPath].createCell(in: collectionView, at: indexPath)
-    }
-}
-
-// MARK: - CompositionLayoutDelegate
-
-extension LegoRenderer: CompositionLayoutDelegate {
-    public func collectionView(_ collectionView: UICollectionView, sectionLayoutAt section: Int) -> SectionLayout {
-        lego.sections[section].layout
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, sizeThatFits size: CGSize, at indexPath: IndexPath) -> CGSize {
-        return lego[indexPath].layout(constraintsTo: size)
     }
 }
 

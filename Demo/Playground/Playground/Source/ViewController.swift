@@ -22,10 +22,19 @@ class ViewController: UIViewController, LegoContainer {
     @StateObject var viewModel = ViewModel()
     @State var flag: Bool = true
 
+    private var sectionLayout: NSCollectionLayoutSection = {
+        let size: NSCollectionLayoutSize = .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(40))
+        let item = NSCollectionLayoutItem(layoutSize: size)
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: size, subitem: item, count: 1)
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 1
+        return section
+    }()
+
     var lego: Lego {
         Lego {
             for group in viewModel.groups {
-                Section(id: group.id, layout: WaterfallLayout()) {
+                Section(id: group.id, layout: sectionLayout) {
                     if flag {
                         GroupItem(id: group.id, name: group.name)
                     }

@@ -8,9 +8,9 @@
 
 import LegoKit
 import UIKit
+import SnapKit
 
 // MARK: - Item
-
 
 /// Item 用来描述渲染一种 Cell 需要携带的数据。
 /// 并从类型和 ``GroupCell`` 进行绑定
@@ -52,20 +52,16 @@ public class GroupCell: UICollectionViewCell, TypedCellType {
         nameLabel.text = item.name
     }
 
-    public static func layout(constraintsTo size: CGSize, with item: Item) -> CGSize {
-        CGSize(width: size.width, height: 40)
-    }
-
     // MARK: - Private
 
     // MARK: Setup
 
     private func setup() {
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(nameLabel)
-        contentView.addConstraints([
-            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-        ])
+        nameLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(24)
+            $0.top.equalToSuperview().offset(8)
+            $0.bottom.equalToSuperview().offset(-8)
+        }
     }
 }

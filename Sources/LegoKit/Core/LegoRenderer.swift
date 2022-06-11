@@ -24,9 +24,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import Combine
 import UIKit
 
-public final class LegoRenderer: NSObject {
+public typealias CellProvider = (UICollectionView, IndexPath, AnyHashable) -> UICollectionViewCell?
+
+public final class LegoRenderer {
     public private(set) lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -40,19 +43,14 @@ public final class LegoRenderer: NSObject {
         return layout
     }()
 
-    private lazy var dataSource: LegoDataSource = {
-        let dataSource: LegoDataSource
-        dataSource = LegoDiffableDataSource(collectionView: collectionView) { [weak self] in
-            self?.cellProvider(collectionView: $0, indexPath: $1, itemID: $2)
-        }
-        return dataSource
-    }()
+    private lazy var dataSource: UICollectionViewDiffableDataSource<AnyHashable, AnyHashable> = .init(collectionView: collectionView) { [weak self] in
+        self?.cellProvider(collectionView: $0, indexPath: $1, itemID: $2)
+    }
 
     public private(set) var lego: Lego
 
     public init(lego: Lego) {
         self.lego = lego
-        super.init()
     }
 
     public func render(in view: UIView, config: (UICollectionView) -> Void = { _ in }) {
@@ -63,7 +61,7 @@ public final class LegoRenderer: NSObject {
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
-        dataSource.apply(lego: lego, animatingDifferences: true)
+        apply(lego: lego, animatingDifferences: true)
         config(collectionView)
     }
 
@@ -72,8 +70,23 @@ public final class LegoRenderer: NSObject {
     ///   - lego: The lego specified to apply
     ///   - animatingDifferences: A bool value indicates whether perform animations.
     public func apply(lego: Lego, animatingDifferences: Bool = true) {
+        var snapshot = NSDiffableDataSourceSnapshot<AnyHashable, AnyHashable>()
+        snapshot.appendSections(lego.sections.map { $0.id })
+        lego.sections.forEach {
+            snapshot.appendItems($0.items.map { $0.anyID }, toSection: $0.id)
+        }
+        let allIdentifiers = Set(snapshot.itemIdentifiers)
+        for indexPath in collectionView.indexPathsForVisibleItems {
+            guard let identifier = dataSource.itemIdentifier(for: indexPath),
+                    allIdentifiers.contains(identifier),
+                  let cell = collectionView.cellForItem(at: indexPath)
+            else {
+                continue
+            }
+            self.lego[indexPath].updateCell(cell)
+        }
         self.lego = lego
-        dataSource.apply(lego: lego, animatingDifferences: animatingDifferences)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
 
     private func cellProvider(collectionView: UICollectionView, indexPath: IndexPath, itemID: AnyHashable) -> UICollectionViewCell? {

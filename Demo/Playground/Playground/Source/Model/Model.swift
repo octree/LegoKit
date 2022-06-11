@@ -28,13 +28,13 @@ extension Gender {
     static var random: Gender { allCases.randomElement()! }
 }
 
-public struct Group {
+public struct Group: Equatable {
     public var id: UUID = .init()
     public var name: String
     public var users: [User]
 }
 
-public struct User {
+public struct User: Equatable {
     public var id: UUID = .init()
     public var name: String
     public var gender: Gender = .random

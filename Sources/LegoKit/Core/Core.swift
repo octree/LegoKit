@@ -43,12 +43,18 @@ public protocol ItemType {
 public struct AnyItem: ItemType {
     public var base: ItemType
     public var anyID: AnyHashable { base.anyID }
+    private var _updateCell: (UICollectionViewCell) -> Void
     public func createCell(in collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell {
         base.createCell(in: collectionView, at: indexPath)
     }
 
     init<C: TypedItemType>(_ item: C) {
         base = item
+        _updateCell = { item.updateCell($0) }
+    }
+
+    func updateCell(_ cell: UICollectionViewCell) {
+        _updateCell(cell)
     }
 
     func `as`<C: TypedItemType>(_ type: C.Type) -> C? {
@@ -92,5 +98,16 @@ extension TypedItemType {
 
     static func register(in collectionView: UICollectionView) {
         collectionView.register(CellType.classForCoder(), forCellWithReuseIdentifier: identifier)
+    }
+}
+
+extension ItemType {
+    func updateCell(_ cell: UICollectionViewCell) { fatalError() }
+}
+
+extension TypedItemType {
+    func updateCell(_ cell: UICollectionViewCell) {
+        guard let cell = cell as? CellType else { return }
+        cell.update(with: self)
     }
 }

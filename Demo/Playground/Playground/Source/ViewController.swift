@@ -59,8 +59,13 @@ class ViewController: UIViewController, LegoContainer {
         let push = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(push))
         navigationItem.rightBarButtonItems = [push, barItem]
 
+        let updateItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(updateItem))
         let addItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addMember))
-        navigationItem.leftBarButtonItem = addItem
+        navigationItem.leftBarButtonItems = [addItem, updateItem]
+    }
+
+    @objc private func updateItem() {
+        viewModel.groups[0].users[0].name += " Octree"
     }
 
     @objc private func toggle() {

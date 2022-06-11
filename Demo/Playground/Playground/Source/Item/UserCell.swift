@@ -66,6 +66,7 @@ public class UserCell: UICollectionViewCell, TypedCellType {
     // MARK: Setup
 
     private func setup() {
+        nameLabel.numberOfLines = 0
         contentView.addSubview(nameLabel)
         nameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(24)

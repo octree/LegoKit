@@ -79,7 +79,7 @@ public class UserCell: UICollectionViewCell, TypedCellType {
             $0.leading.equalToSuperview().offset(24)
             $0.top.equalTo(nameLabel.snp.bottom).offset(8)
             $0.trailing.equalToSuperview().offset(-24)
-            $0.bottom.equalToSuperview().offset(-16)
+            $0.bottom.equalToSuperview().offset(-16).priority(.low)
         }
     }
 }

@@ -61,7 +61,7 @@ public class GroupCell: UICollectionViewCell, TypedCellType {
         nameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(24)
             $0.top.equalToSuperview().offset(8)
-            $0.bottom.equalToSuperview().offset(-8)
+            $0.bottom.equalToSuperview().offset(-8).priority(.low)
         }
     }
 }

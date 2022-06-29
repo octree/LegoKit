@@ -79,11 +79,13 @@ public final class LegoRenderer {
         for indexPath in collectionView.indexPathsForVisibleItems {
             guard let identifier = dataSource.itemIdentifier(for: indexPath),
                     allIdentifiers.contains(identifier),
-                  let cell = collectionView.cellForItem(at: indexPath)
+                  let cell = collectionView.cellForItem(at: indexPath),
+                  let newIndexPath = lego.indexPathForItem(with: identifier)
             else {
                 continue
             }
-            self.lego[indexPath].updateCell(cell)
+
+            lego[newIndexPath].updateCell(cell)
         }
         self.lego = lego
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)

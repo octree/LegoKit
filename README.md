@@ -30,18 +30,13 @@ public class ColorCell: UICollectionViewCell, TypedCellType {
     public func update(with item: ColorItem) {
         backgroundColor = item.color
     }
-
-    public static func layout(constraintsTo size: CGSize, with item: ColorItem) -> CGSize {
-        CGSize(width: size.width, height: item.height)
-    }
 }
 ```
 
 * id: 可以是任意 `Hashable`类型，为了给以后做动画，进行 diff 准备的预留属性。
 * 其他的属性，是用来配置 Cell 的信息
-* Cell 需要实现 `TypedCellType` 的两个方法
+* Cell 需要实现 `TypedCellType` 的方法
   * **update**：根据对应的 `Item` 更新 UI
-  * **layout**：根据 Item 和给定的 size 信息，计算当前 Cell 的 size
 
 ### 渲染 UICollectionView
 

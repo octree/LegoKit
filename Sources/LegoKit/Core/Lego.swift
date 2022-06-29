@@ -43,3 +43,14 @@ public extension Lego {
         self[indexPath].as(type)
     }
 }
+
+extension Lego {
+    func indexPathForItem(with identifier: AnyHashable) -> IndexPath? {
+        for (sectionIndex, section) in sections.enumerated() {
+            for (itemIndex, item) in section.items.enumerated() where item.anyID == identifier {
+                return IndexPath(item: itemIndex, section: sectionIndex)
+            }
+        }
+        return nil
+    }
+}

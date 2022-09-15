@@ -38,7 +38,7 @@ public final class LegoRenderer {
 
     private lazy var layout: UICollectionViewCompositionalLayout = {
         let layout = UICollectionViewCompositionalLayout { [unowned self] section, _ in
-            lego.sections[section].layout
+            lego.sections[section].layout()
         }
         return layout
     }()
@@ -78,7 +78,7 @@ public final class LegoRenderer {
         let allIdentifiers = Set(snapshot.itemIdentifiers)
         for indexPath in collectionView.indexPathsForVisibleItems {
             guard let identifier = dataSource.itemIdentifier(for: indexPath),
-                    allIdentifiers.contains(identifier),
+                  allIdentifiers.contains(identifier),
                   let cell = collectionView.cellForItem(at: indexPath),
                   let newIndexPath = lego.indexPathForItem(with: identifier)
             else {

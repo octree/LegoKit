@@ -28,10 +28,16 @@ import UIKit
 
 public struct Section<ID: Hashable> {
     public var id: ID
-    public var layout: NSCollectionLayoutSection
+    var layout: () -> NSCollectionLayoutSection
     public var items: [AnyItem] = []
 
     public init(id: ID, layout: NSCollectionLayoutSection, @ItemBuilder items: () -> [AnyItem]) {
+        self.id = id
+        self.layout = { layout }
+        self.items = items()
+    }
+
+    public init(id: ID, layout: @escaping () -> NSCollectionLayoutSection, @ItemBuilder items: () -> [AnyItem]) {
         self.id = id
         self.layout = layout
         self.items = items()
@@ -40,12 +46,12 @@ public struct Section<ID: Hashable> {
 
 public struct AnySection {
     public var id: AnyHashable
-    public var layout: NSCollectionLayoutSection
+    var layout: () -> NSCollectionLayoutSection
     public var items: [AnyItem] = []
 
     init<ID>(_ section: Section<ID>) {
-        self.id = section.id
-        self.layout = section.layout
-        self.items = section.items
+        id = section.id
+        layout = section.layout
+        items = section.items
     }
 }

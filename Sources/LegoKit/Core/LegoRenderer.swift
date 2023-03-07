@@ -37,19 +37,25 @@ public final class LegoRenderer {
     }()
 
     private lazy var layout: UICollectionViewCompositionalLayout = {
-        let layout = UICollectionViewCompositionalLayout { [unowned self] section, _ in
+        let provider: UICollectionViewCompositionalLayoutSectionProvider = { [unowned self] section, _ in
             lego.sections[section].layout()
         }
-        return layout
+        if let layoutConfiguration {
+            return .init(sectionProvider: provider, configuration: layoutConfiguration)
+        } else {
+            return .init(sectionProvider: provider)
+        }
     }()
 
     private lazy var dataSource: UICollectionViewDiffableDataSource<AnyHashable, AnyHashable> = .init(collectionView: collectionView) { [weak self] in
         self?.cellProvider(collectionView: $0, indexPath: $1, itemID: $2)
     }
 
-    public private(set) var lego: Lego
+    private var layoutConfiguration: UICollectionViewCompositionalLayoutConfiguration?
 
-    public init(lego: Lego) {
+    public private(set) var lego: Lego
+    public init(lego: Lego, layoutConfiguration: UICollectionViewCompositionalLayoutConfiguration? = nil) {
+        self.layoutConfiguration = layoutConfiguration
         self.lego = lego
     }
 

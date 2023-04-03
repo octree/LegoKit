@@ -28,6 +28,7 @@ import Combine
 import UIKit
 
 public typealias CellProvider = (UICollectionView, IndexPath, AnyHashable) -> UICollectionViewCell?
+public typealias SupplementaryViewProvider = (UICollectionView, String, IndexPath) -> UICollectionReusableView?
 
 public final class LegoRenderer {
     public private(set) lazy var collectionView: UICollectionView = {
@@ -49,6 +50,15 @@ public final class LegoRenderer {
 
     private lazy var dataSource: UICollectionViewDiffableDataSource<AnyHashable, AnyHashable> = .init(collectionView: collectionView) { [weak self] in
         self?.cellProvider(collectionView: $0, indexPath: $1, itemID: $2)
+    }
+
+    public var supplementaryViewProvider: SupplementaryViewProvider? {
+        get {
+            dataSource.supplementaryViewProvider
+        }
+        set {
+            dataSource.supplementaryViewProvider = newValue
+        }
     }
 
     private var layoutConfiguration: UICollectionViewCompositionalLayoutConfiguration?

@@ -38,8 +38,8 @@ public final class LegoRenderer {
     }()
 
     private lazy var layout: UICollectionViewCompositionalLayout = {
-        let provider: UICollectionViewCompositionalLayoutSectionProvider = { [unowned self] section, _ in
-            lego.sections[section].layout()
+        let provider: UICollectionViewCompositionalLayoutSectionProvider = { [unowned self] section, environment in
+            lego.sections[section].layout(environment)
         }
         if let layoutConfiguration {
             return .init(sectionProvider: provider, configuration: layoutConfiguration)

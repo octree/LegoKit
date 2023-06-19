@@ -77,8 +77,8 @@ public final class LegoRenderer {
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-        apply(lego: lego, animatingDifferences: true)
         config(collectionView)
+        apply(lego: lego, animatingDifferences: true)
     }
 
     /// Update collectionView with a specified ``Lego``

@@ -62,6 +62,7 @@ public final class LegoRenderer {
     }
 
     private var layoutConfiguration: UICollectionViewCompositionalLayoutConfiguration?
+    public var isAnimationEnabled: Bool = true
 
     public private(set) var lego: Lego
     public init(lego: Lego, layoutConfiguration: UICollectionViewCompositionalLayoutConfiguration? = nil) {
@@ -85,7 +86,7 @@ public final class LegoRenderer {
     /// - Parameters:
     ///   - lego: The lego specified to apply
     ///   - animatingDifferences: A bool value indicates whether perform animations.
-    public func apply(lego: Lego, animatingDifferences: Bool = true) {
+    public func apply(lego: Lego, animatingDifferences: Bool? = nil) {
         var snapshot = NSDiffableDataSourceSnapshot<AnyHashable, AnyHashable>()
         snapshot.appendSections(lego.sections.map { $0.id })
         lego.sections.forEach {
@@ -104,7 +105,7 @@ public final class LegoRenderer {
             lego[newIndexPath].updateCell(cell)
         }
         self.lego = lego
-        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences ?? isAnimationEnabled)
     }
 
     private func cellProvider(collectionView: UICollectionView, indexPath: IndexPath, itemID: AnyHashable) -> UICollectionViewCell? {

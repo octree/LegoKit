@@ -50,6 +50,7 @@ public struct LegoPublished<Value> {
         get { fatalError() }
         // swiftlint:disable unused_setter_value
         set { fatalError() }
+        // swiftlint:enable unused_setter_value
     }
 
     private var storage: Value

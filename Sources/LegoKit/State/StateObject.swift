@@ -24,8 +24,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import Foundation
 import Combine
+import Foundation
 
 /// This property wrapper will apply ``Lego`` to ``LegoRenderer`` automatically while the ``Published`` value wa changed.
 /// The instance that hold this property must confirm to ``LegoContainer`` protocol.
@@ -38,6 +38,7 @@ public struct StateObject<Value: LegoObservableObject> {
         get { fatalError() }
         // swiftlint:disable unused_setter_value
         set { fatalError() }
+        // swiftlint:enable unused_setter_value
     }
 
     private class Box {
@@ -51,7 +52,7 @@ public struct StateObject<Value: LegoObservableObject> {
     /// Create a property wrapper with initial value
     /// - Parameter wrappedValue: The object to observed.
     public init(wrappedValue: Value) {
-        self.storage = wrappedValue
+        storage = wrappedValue
     }
 
     private func bind(to instance: LegoContainer) {

@@ -28,6 +28,9 @@ import Foundation
 
 @resultBuilder
 public enum SectionBuilder {
+    public static func buildExpression(_ expression: Void) -> [AnySection] {
+        []
+    }
 
     public static func buildExpression<ID>(_ expression: Section<ID>) -> [AnySection] {
         [AnySection(expression)]

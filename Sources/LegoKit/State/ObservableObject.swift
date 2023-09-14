@@ -32,15 +32,15 @@ public protocol LegoObservableObject: AnyObject {
 }
 
 private enum AssociatedKeys {
-    static var publisher = "LegoKit.ObjectDidChangePublisher"
+    static let publisher = malloc(1)!
 }
 
 public extension LegoObservableObject {
     var objectDidChange: PassthroughSubject<Void, Never> {
-        var publisher = objc_getAssociatedObject(self, &AssociatedKeys.publisher) as? PassthroughSubject<Void, Never>
+        var publisher = objc_getAssociatedObject(self, AssociatedKeys.publisher) as? PassthroughSubject<Void, Never>
         if publisher == nil {
             publisher = .init()
-            objc_setAssociatedObject(self, &AssociatedKeys.publisher, publisher, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, AssociatedKeys.publisher, publisher, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
         return publisher!
     }

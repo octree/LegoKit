@@ -58,8 +58,8 @@ public struct StateObject<Value: LegoObservableObject> {
     private func bind(to instance: LegoContainer) {
         guard box.container !== instance else { return }
         box.container = instance
-        box.cancellable = storage.objectDidChange.sink {
-            guard let container = box.container else {
+        box.cancellable = storage.objectDidChange.sink { [weak box] in
+            guard let container = box?.container else {
                 return
             }
             container.legoRenderer.apply(lego: container.lego)

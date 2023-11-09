@@ -4,7 +4,7 @@
 //
 //  Created by octree on 2022/3/11.
 //
-//  Copyright (c) 2022 Octree <octree.liu@ponyft.com>
+//  Copyright (c) 2022 Octree <fouljz@gmail.com>
 
 import LegoKit
 import UIKit

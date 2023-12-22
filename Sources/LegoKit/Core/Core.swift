@@ -70,6 +70,7 @@ public protocol TypedItemType: ItemType {
 
 public extension TypedItemType {
     var asItems: [AnyItem] { [AnyItem(self)] }
+    var asItem: AnyItem { AnyItem(self) }
 }
 
 public extension TypedItemType {

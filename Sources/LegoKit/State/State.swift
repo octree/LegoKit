@@ -50,6 +50,7 @@ final class AnyLocation<Value> {
 /// This property wrapper will apply ``Lego`` to ``LegoRenderer`` automatically while the wrappedValue was changed.
 /// The instance that hold this property must confirm to ``LegoContainer`` protocol.
 @propertyWrapper
+@MainActor
 public struct State<Value> {
     @available(*, unavailable,
                message: "This property wrapper can only be applied to ``LegoContainer``")

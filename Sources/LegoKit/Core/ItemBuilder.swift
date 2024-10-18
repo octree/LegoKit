@@ -27,9 +27,14 @@
 import Foundation
 
 @resultBuilder
+@MainActor
 public enum ItemBuilder {
     public static func buildExpression(_ expression: Void) -> [AnyItem] {
         []
+    }
+
+    public static func buildExpression(_ expression: AnyItem) -> [AnyItem] {
+        [expression]
     }
 
     public static func buildExpression<C: TypedItemType>(_ expression: C) -> [AnyItem] {

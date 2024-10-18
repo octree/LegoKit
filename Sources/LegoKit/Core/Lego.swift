@@ -26,6 +26,7 @@
 
 import UIKit
 
+@MainActor
 public struct Lego {
     public var sections: [AnySection]
 
@@ -45,9 +46,9 @@ public extension Lego {
 }
 
 extension Lego {
-    func indexPathForItem(with identifier: AnyHashable) -> IndexPath? {
+    func indexPathForItem<ID: Hashable & Sendable>(with identifier: ID) -> IndexPath? {
         for (sectionIndex, section) in sections.enumerated() {
-            for (itemIndex, item) in section.items.enumerated() where item.anyID == identifier {
+            for (itemIndex, item) in section.items.enumerated() where item.anyID == AnyID(identifier) {
                 return IndexPath(item: itemIndex, section: sectionIndex)
             }
         }

@@ -29,6 +29,7 @@ import Foundation
 /// 这个 PropertyWrapper 可以在任何情况下使用
 /// 当是一个 ``LegoContainer`` 的属性时，会自动更新 ``LegoRenderer``
 @propertyWrapper
+@MainActor
 public struct Binding<Value> {
     public var wrappedValue: Value {
         get { get() }

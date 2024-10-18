@@ -26,7 +26,7 @@
 
 import UIKit
 
-public struct Section<ID: Hashable> {
+public struct Section<ID: Hashable & Sendable> {
     public var id: ID
     var layout: (NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection
     public var items: [AnyItem] = []
@@ -51,12 +51,12 @@ public struct Section<ID: Hashable> {
 }
 
 public struct AnySection {
-    public var id: AnyHashable
+    public var id: AnyID
     var layout: (NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection
     public var items: [AnyItem] = []
 
     init<ID>(_ section: Section<ID>) {
-        id = section.id
+        id = AnyID(section.id)
         layout = section.layout
         items = section.items
     }

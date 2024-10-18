@@ -30,6 +30,7 @@ import UIKit
 public typealias CellProvider = (UICollectionView, IndexPath, AnyHashable) -> UICollectionViewCell?
 public typealias SupplementaryViewProvider = (UICollectionView, String, IndexPath) -> UICollectionReusableView?
 
+@MainActor
 public final class LegoRenderer {
     public private(set) lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
@@ -48,7 +49,7 @@ public final class LegoRenderer {
         }
     }()
 
-    private lazy var dataSource: UICollectionViewDiffableDataSource<AnyHashable, AnyHashable> = .init(collectionView: collectionView) { [weak self] in
+    private lazy var dataSource: UICollectionViewDiffableDataSource<AnyID, AnyID> = .init(collectionView: collectionView) { [weak self] in
         self?.cellProvider(collectionView: $0, indexPath: $1, itemID: $2)
     }
 
@@ -87,7 +88,7 @@ public final class LegoRenderer {
     ///   - lego: The lego specified to apply
     ///   - animatingDifferences: A bool value indicates whether perform animations.
     public func apply(lego: Lego, animatingDifferences: Bool? = nil) {
-        var snapshot = NSDiffableDataSourceSnapshot<AnyHashable, AnyHashable>()
+        var snapshot = NSDiffableDataSourceSnapshot<AnyID, AnyID>()
         snapshot.appendSections(lego.sections.map { $0.id })
         lego.sections.forEach {
             snapshot.appendItems($0.items.map { $0.anyID }, toSection: $0.id)

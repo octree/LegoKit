@@ -29,6 +29,7 @@ import UIKit
 /// A protocol defines the part of a ``LegoContainer`` type.
 /// You can make your ``UIViewController`` confirm to this protocol,
 /// so that You can use ``@State``、``@StateObject``.
+@MainActor
 public protocol LegoContainer: AnyObject {
     var lego: Lego { get }
     var legoRenderer: LegoRenderer { get }

@@ -31,6 +31,7 @@ import Foundation
 /// The instance that hold this property must confirm to ``LegoContainer`` protocol.
 /// And the value must confirm to ``LegoObservableObject`` protocol
 @propertyWrapper
+@MainActor
 public struct StateObject<Value: LegoObservableObject> {
     @available(*, unavailable,
                message: "This property wrapper can only be applied to ``LegoContainer``")

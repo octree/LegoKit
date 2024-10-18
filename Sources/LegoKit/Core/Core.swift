@@ -26,23 +26,51 @@
 
 import UIKit
 
+public struct AnyID: Hashable, Sendable, Equatable {
+    private nonisolated(unsafe) var value: Any
+    private nonisolated(unsafe) var hashInto: (inout Hasher) -> Void
+    private nonisolated(unsafe) var equalTo: (AnyID) -> Bool
+    init<Value: Hashable & Sendable>(_ value: Value) {
+        self.value = value
+        hashInto = {
+            $0.combine(value)
+        }
+        equalTo = {
+            guard let other = $0 as? Value else { return false }
+            return other == value
+        }
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hashInto(&hasher)
+    }
+
+    public static func == (lhs: AnyID, rhs: AnyID) -> Bool {
+        lhs.equalTo(rhs)
+    }
+}
+
 /// A type represents the part of a lego cell
+@MainActor
 public protocol CellType {}
 
 /// A Lego cell with a specified Item type
+@MainActor
 public protocol TypedCellType: CellType {
     associatedtype Item
     func update(with item: Item)
 }
 
+@MainActor
 public protocol ItemType {
-    var anyID: AnyHashable { get }
+    var anyID: AnyID { get }
     func createCell(in collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell
 }
 
+@MainActor
 public struct AnyItem: ItemType {
     public var base: ItemType
-    public var anyID: AnyHashable { base.anyID }
+    public var anyID: AnyID { base.anyID }
     private var _updateCell: (UICollectionViewCell) -> Void
     public func createCell(in collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell {
         base.createCell(in: collectionView, at: indexPath)
@@ -62,8 +90,9 @@ public struct AnyItem: ItemType {
     }
 }
 
+@MainActor
 public protocol TypedItemType: ItemType {
-    associatedtype ID: Hashable
+    associatedtype ID: Hashable & Sendable
     associatedtype CellType: UICollectionViewCell, TypedCellType where CellType.Item == Self
     var id: ID { get }
 }
@@ -73,7 +102,7 @@ public extension TypedItemType {
 }
 
 public extension TypedItemType {
-    var anyID: AnyHashable { id }
+    var anyID: AnyID { .init(id) }
 }
 
 public extension ItemType {

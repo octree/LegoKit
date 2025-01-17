@@ -54,4 +54,13 @@ extension Lego {
         }
         return nil
     }
+
+    func indexPathForItem(with identifier: AnyID) -> IndexPath? {
+        for (sectionIndex, section) in sections.enumerated() {
+            for (itemIndex, item) in section.items.enumerated() where item.anyID == identifier {
+                return IndexPath(item: itemIndex, section: sectionIndex)
+            }
+        }
+        return nil
+    }
 }
